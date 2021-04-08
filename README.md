@@ -126,4 +126,8 @@ When all services are up and running, you should also be able to see istio-ingre
 kubectl get service istio-ingressgateway -n istio-system
 ```
 
-If service type is set to NodePort, edit its specification and replace NodePort with LoadBalancer. After saving changes, istio-ingressgateway should have an external IP to be used to access it from the outside.
+If service type is set to NodePort, edit its specification and replace NodePort with LoadBalancer. After saving changes, istio-ingressgateway should have an external IP to be used to access it from the outside. Finally, use port-forwarding to expose Kubeflow Dashboard. Once again you'll need to wait a minute before you can access it.
+
+```bash
+kubectl port-forward svc/istio-ingressgateway -n istio-system 8080:80
+```
