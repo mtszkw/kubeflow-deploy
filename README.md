@@ -118,3 +118,12 @@ Run this to check the status (you'll need to wait a minute or two for all servic
 ```bash
 kubectl -n kubeflow get all
 ```
+
+### Accessing Kubeflow Dashboard using external IP
+
+When all services are up and running, you should also be able to see istio-ingressgateway:
+```bash
+kubectl get service istio-ingressgateway -n istio-system
+```
+
+If service type is set to NodePort, edit its specification and replace NodePort with LoadBalancer. After saving changes, istio-ingressgateway should have an external IP to be used to access it from the outside.
