@@ -1,3 +1,7 @@
+<p align="center">
+ <img src="https://d2908q01vomqb2.cloudfront.net/ca3512f4dfa95a03169c5a670a4c91a19b3077b4/2018/09/29/image-2.png">
+</p>
+
 # Kubeflow on Amazon EKS
 Instructions for deploying Kubeflow on Amazon EKS
 
