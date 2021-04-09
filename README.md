@@ -3,7 +3,7 @@
 </p>
 
 # Kubeflow on Amazon EKS
-Instructions for deploying Kubeflow on Amazon EKS
+Instructions for deploying [Kubeflow](https://www.kubeflow.org/) on [Amazon EKS](https://aws.amazon.com/eks/)
 
 ### Prerequisites
 
