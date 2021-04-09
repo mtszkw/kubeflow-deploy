@@ -7,8 +7,7 @@ Instructions for deploying Kubeflow on Amazon EKS
 
 ### Prerequisites
 
-* Permissions
-  * [Minimum IAM policies for EKS](https://eksctl.io/usage/minimum-iam-policies/)
+Permissions: Check [Permissions.md](Permissions.md) file for detailed description of policies used for this task.
 
 ### Creating CloudShell environment
 
