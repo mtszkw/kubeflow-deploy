@@ -7,22 +7,27 @@ Instructions for deploying Kubeflow on Amazon EKS
 
 ### Prerequisites
 
-Permissions: Check [Permissions.md](Permissions.md) file for detailed description of policies used for this task.
+* Well, an AWS Account
+* Permissions (check [Permissions.md](Permissions.md) file for detailed description of policies used for this task)
 
-### Creating CloudShell environment
+### CreatingCloudShell environment
+
+In the very first step install kubectl and eksctl to be able to configure K8s and EKS cluster.  
+I used CloudShell to execute CLI commands, but you're welcome to use local AWS CLI, Cloud9 IDE or whatnot.
 
 ```bash
-sudo curl --silent --location -o /usr/local/bin/kubectl  https://amazon-eks.s3.us-west-2.amazonaws.com/1.17.11/2020-09-18/bin/linux/amd64/kubectl
+sudo curl --silent --location -o /usr/local/bin/kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.17.11/2020-09-18/bin/linux/amd64/kubectl
 
 sudo chmod +x /usr/local/bin/kubectl
 
 curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
 
 sudo mv -v /tmp/eksctl /usr/local/bin
-
 ```
 
 ### Creating EKS Cluster
+
+As soon as eksctl is installed, you can create new EKS cluster. Two m5.xlarge instances were enough for me.
 
 ```bash
 cat << EoF > create-cluster.yaml
@@ -45,14 +50,25 @@ EoF
 eksctl create cluster -f create-cluster.yaml 
 ```
 
+If there were no errors when creating cluster, you should be able to see it now:
+
 ```bash
 eksctl get cluster
+```
+
+Along with two instances created in eks-kubeflow node group:
+
+```
 eksctl get nodegroup --cluster eks-kubeflow
 ```
+
+After that, I couldn't see nodes when using `kubectl get nodes` so I had to update my kubeconfig first:
 
 ```bash
 aws eks --region us-east-2 update-kubeconfig --name eks-kubeflow
 ```
+
+Done. Cluster and nodes should be up and running. Time for the next step.
 
 ### Install Kubeflow on Amazon EKS
 
