@@ -205,7 +205,7 @@ data "aws_availability_zones" "available" {
 }
 
 locals {
-  cluster_name = "my-cluster"
+  cluster_name = "kubeflow-cluster"
 }
 
 # VPC
@@ -245,11 +245,11 @@ module "eks" {
 
   node_groups = {
     first = {
-      desired_capacity = 1
+      desired_capacity = 2
       max_capacity     = 2
       min_capacity     = 1
 
-      instance_type = "t3.small"
+      instance_type = "m5.xlarge"
     }
   }
 
