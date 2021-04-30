@@ -249,7 +249,7 @@ module "eks" {
       max_capacity     = 2
       min_capacity     = 1
 
-      instance_type = "m5.xlarge"
+      instance_types = ["m5.xlarge", "m5.xlarge"]
     }
   }
 

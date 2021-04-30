@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Exit when any command fails
+set -e
+
 CONFIG_AWS_REGION="eu-central-1"
 CONFIG_AWS_PROFILE="personal-admin"
 CONFIG_EKS_CLUSTER_NAME="kubeflow_cluster"
@@ -52,11 +55,11 @@ cd terraform
 terraform init && terraform validate && terraform apply -auto-approve
 
 TERRAFORM_EKS_CLUSTER_IAM_ROLE_NAME=$(terraform output -raw eks_cluster_iam_role_name)
-echo $TERRAFORM_EKS_CLUSTER_IAM_ROLE_NAME
 
 # Check if it's working
 cd ..
 export KUBECONFIG="$PWD/terraform/kubeconfig_kubeflow-cluster"
+echo "KUBECONFIG=$KUBECONFIG"
 kubectl get nodes --all-namespaces
 
 # Prepare for Kubeflow deployment
@@ -74,11 +77,15 @@ sed -i -e "s/us-west-2/$CONFIG_AWS_REGION/g" $CONFIG_FILE
 sed -i -e "s/#roles/roles/g" $CONFIG_FILE
 sed -i -e "s/#- eksctl-kubeflow-aws-nodegroup-ng-a2-NodeInstanceRole-xxxxxxx/- $TERRAFORM_EKS_CLUSTER_IAM_ROLE_NAME/g" $CONFIG_FILE
 sed -i -e "s/enablePodIamPolicy: true/enablePodIamPolicy: false/g" $CONFIG_FILE
+tail -15 $CONFIG_FILE
 
-cat $CONFIG_FILE
 # Pray
 kfctl apply -V -f $CONFIG_FILE
 
+echo "Waiting for all services to be ready (2 min)" && sleep 2m
+
 kubectl get service istio-ingressgateway -n istio-system
+
+# kubectl port-forward svc/istio-ingressgateway -n istio-system 8080:80
 
 # kubectl patch svc istio-ingressgateway -p '{"spec": {"type": "LoadBalancer"}}' -n istio-system
