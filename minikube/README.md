@@ -3,7 +3,8 @@ Following tutorial is based on official [Kubeflow Deployment with kfctl_k8s_isti
 
 ### Prerequisites (aka My local setup)
 - WSL 2 on Windows 10
-- `minikube` installed (my version: v1.18.1)
+- Docker Desktop using WSL 2
+- `minikube` installed on WSL (my version: v1.18.1)
 
 ### Creating environment
 
