@@ -2,6 +2,8 @@
 
 Mentioned in [Kubeflow (is not) for Dummies](https://mtszkw.substack.com/p/kubeflow-is-not-for-dummies) blog post.
 
+_Note 02.06.2021: these are instructions for deploying Kubeflow 1.2 (still using kfctl instead of kustomize)_
+
 ### [AWS EKS + CloudShell](aws-cloudshell/)
 
 Deploying Kubeflow using AWS CloudShell and eksctl, no need to configure aws-cli. Poor reproducibility.
