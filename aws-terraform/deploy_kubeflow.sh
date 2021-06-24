@@ -16,8 +16,14 @@ source get_dependencies.sh
 cd terraform && \
 terraform init && \
 terraform validate && \
-terraform apply -auto-approve -var="aws_profile=$AWS_PROFILE" -var="aws_region=$AWS_REGION" -var="aws_cluster_name=$CONFIG_EKS_CLUSTER_NAME"
+terraform apply -auto-approve \
+-var="aws_region=$AWS_DEFAULT_REGION" \
+-var="aws_access_key=$AWS_ACCESS_KEY_ID" \
+-var="aws_secret_key=$AWS_SECRET_ACCESS_KEY" \
+-var="aws_cluster_name=$CONFIG_EKS_CLUSTER_NAME"
+
 TERRAFORM_EKS_CLUSTER_IAM_ROLE_NAME=$(terraform output -raw eks_cluster_iam_role_name)
+
 cd ..
 
 export KUBECONFIG="$PWD/terraform/kubeconfig_$CONFIG_EKS_CLUSTER_NAME"
@@ -34,7 +40,7 @@ mkdir -p $KUBEFLOW_DIR && cd $KUBEFLOW_DIR
 wget -O $CONFIG_FILE $CONFIG_URI
 
 # Replace region in kfctl_aws.yaml
-sed -i -e "s/us-west-2/$CONFIG_AWS_REGION/g" $CONFIG_FILE
+sed -i -e "s/us-west-2/$AWS_DEFAULT_REGION/g" $CONFIG_FILE
 sed -i -e "s/#roles/roles/g" $CONFIG_FILE
 sed -i -e "s/#- eksctl-kubeflow-aws-nodegroup-ng-a2-NodeInstanceRole-xxxxxxx/- $TERRAFORM_EKS_CLUSTER_IAM_ROLE_NAME/g" $CONFIG_FILE
 sed -i -e "s/enablePodIamPolicy: true/enablePodIamPolicy: false/g" $CONFIG_FILE

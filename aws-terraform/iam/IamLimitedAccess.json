@@ -1,0 +1,72 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "iam:CreateInstanceProfile",
+                "iam:DeleteInstanceProfile",
+                "iam:GetInstanceProfile",
+                "iam:RemoveRoleFromInstanceProfile",
+                "iam:GetRole",
+                "iam:CreateRole",
+                "iam:DeleteRole",
+                "iam:AttachRolePolicy",
+                "iam:PutRolePolicy",
+                "iam:ListInstanceProfiles",
+                "iam:AddRoleToInstanceProfile",
+                "iam:ListInstanceProfilesForRole",
+                "iam:PassRole",
+                "iam:DetachRolePolicy",
+                "iam:DeleteRolePolicy",
+                "iam:GetRolePolicy",
+                "iam:GetOpenIDConnectProvider",
+                "iam:CreateOpenIDConnectProvider",
+                "iam:DeleteOpenIDConnectProvider",
+                "iam:ListAttachedRolePolicies",
+                "iam:TagRole"
+            ],
+            "Resource": [
+                "arn:aws:iam::YOUR_AWS_ACCOUNT_ID_GOES_HERE:instance-profile/eksctl-*",
+                "arn:aws:iam::YOUR_AWS_ACCOUNT_ID_GOES_HERE:role/eksctl-*",
+                "arn:aws:iam::YOUR_AWS_ACCOUNT_ID_GOES_HERE:oidc-provider/*",
+                "arn:aws:iam::YOUR_AWS_ACCOUNT_ID_GOES_HERE:role/aws-service-role/eks-nodegroup.amazonaws.com/AWSServiceRoleForAmazonEKSNodegroup",
+                "arn:aws:iam::YOUR_AWS_ACCOUNT_ID_GOES_HERE:role/eksctl-managed-*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "iam:GetRole"
+            ],
+            "Resource": [
+                "arn:aws:iam::YOUR_AWS_ACCOUNT_ID_GOES_HERE:role/*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "iam:GetGroup"
+            ],
+            "Resource": [
+                "arn:aws:iam::YOUR_AWS_ACCOUNT_ID_GOES_HERE:group/*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "iam:CreateServiceLinkedRole"
+            ],
+            "Resource": "*",
+            "Condition": {
+                "StringEquals": {
+                    "iam:AWSServiceName": [
+                        "eks.amazonaws.com",
+                        "eks-nodegroup.amazonaws.com",
+                        "eks-fargate.amazonaws.com"
+                    ]
+                }
+            }
+        }
+    ]
+}

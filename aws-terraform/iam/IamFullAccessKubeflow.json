@@ -1,0 +1,16 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "iam:*"
+            ],
+            "Resource": [
+                "arn:aws:iam::YOUR_AWS_ACCOUNT_ID_GOES_HERE:role/kf-*",
+                "arn:aws:iam::YOUR_AWS_ACCOUNT_ID_GOES_HERE:role/kubeflow*",
+                "arn:aws:iam::YOUR_AWS_ACCOUNT_ID_GOES_HERE:policy/kubeflow*"
+            ]
+        }
+    ]
+}
