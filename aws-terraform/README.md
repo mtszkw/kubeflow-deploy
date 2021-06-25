@@ -32,7 +32,8 @@ source deploy_kubeflow.sh
 
 ## Destroy Kubeflow
 
-Run `destroy_kubeflow` to destroy resources created before.  Make sure that parameters in `set_env_variables` are the same as they were when you executed deploy.
+Run `destroy_kubeflow` to destroy resources created before.  
+Make sure that parameters in `set_env_variables` are the same as they were when you executed deploy.
 
 ```bash
 cd aws-terraform
